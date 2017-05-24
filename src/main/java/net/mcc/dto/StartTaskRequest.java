@@ -1,6 +1,6 @@
 package net.mcc.dto;
 
-public class Task {
+public class StartTaskRequest {
     private String taskType;
 
 

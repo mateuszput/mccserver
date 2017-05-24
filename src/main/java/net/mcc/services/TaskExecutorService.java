@@ -1,8 +1,10 @@
 package net.mcc.services;
 
-import net.mcc.dto.Task;
-import net.mcc.dto.TaskAnswer;
+import net.mcc.dto.StartTaskAnswer;
+import net.mcc.dto.StartTaskRequest;
 import net.mcc.wrappers.VMConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +12,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 public class TaskExecutorService {
@@ -24,19 +24,18 @@ public class TaskExecutorService {
     private final Map<String, String> servers = new HashMap<>();
     private final Map<Long, String> idResultMap = new HashMap<>();
 
-    TaskExecutorService () {
+    TaskExecutorService() {
         // TODO: wypelnic danymi z serwera
         servers.put("Type1", "192.168.0.1");
     }
 
-    public TaskAnswer startTask(Task taskData) throws IOException {
+    public StartTaskAnswer startTask(StartTaskRequest startTaskRequestData) throws IOException {
         Long taskID = currentTaskID.incrementAndGet();
-
-        String taskType = taskData.getTaskType();
-        log.info("send rest json to server: " + servers.get(taskType));
+        String taskType = startTaskRequestData.getTaskType();
 
         // TODO: start new task using vmConnector
-//        vmConnector.startTask(servers.get(taskType), taskID);
-        return new TaskAnswer(currentTaskID.incrementAndGet());
+        vmConnector.startTask(servers.get(taskType), taskID);
+
+        return new StartTaskAnswer(taskID);
     }
 }

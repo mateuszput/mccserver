@@ -1,43 +1,42 @@
 package net.mcc.controllers;
 
-import net.mcc.dto.Task;
+import net.mcc.dto.IncomingTaskResult;
+import net.mcc.dto.StartTaskAnswer;
+import net.mcc.dto.StartTaskRequest;
 import net.mcc.dto.TaskAnswer;
 import net.mcc.services.TaskExecutorService;
 import net.mcc.services.TaskResultsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class TaskController {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     TaskExecutorService taskExecutorService;
     @Autowired
     TaskResultsService taskResultsService;
 
     @RequestMapping(path = "/tasks", method = RequestMethod.POST)
-    public TaskAnswer runTask(@RequestBody Task taskData) throws IOException {
-        TaskAnswer taskAnswer = taskExecutorService.startTask(taskData);
-        return taskAnswer;
-    }
-
-    //TODO: uzyc poprawnych danych zwracanych przez task
-    @RequestMapping(path = "/resultFromTask1", method = RequestMethod.POST)
-    public void postResult(@RequestBody Task1Result taskResult) throws IOException {
-
-//        TaskAnswer taskAnswer = taskExecutorService.startTask(taskData);
-//        return taskAnswer;
+    public StartTaskAnswer runTask(@RequestBody StartTaskRequest startTaskRequestData) throws IOException {
+        return taskExecutorService.startTask(startTaskRequestData);
     }
 
 
+    @RequestMapping(path = "/returnResult", method = RequestMethod.POST)
+    public void postResult(@RequestBody IncomingTaskResult taskResult) throws IOException {
+        taskResultsService.postResult(taskResult);
+    }
 
-    @RequestMapping(path = "/pingResult", method = RequestMethod.GET)
-    public boolean pingResult(@PathVariable Long taskID) throws IOException {
-        return taskResultsService.getResult(taskID);
+
+    @RequestMapping(path = "/pingResult/{id}", method = RequestMethod.GET)
+    public TaskAnswer pingResult(@PathVariable Long id) throws IOException {
+        return taskResultsService.getResult(id);
     }
 
 }
