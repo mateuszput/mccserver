@@ -33,7 +33,7 @@ public class TaskExecutorService {
         Long taskID = currentTaskID.incrementAndGet();
         String taskType = startTaskRequestData.getTaskType();
 
-        // TODO: start new task using vmConnector
+        // start new task on VM using vmConnector
         vmConnector.startTask(servers.get(taskType), taskID);
 
         return new StartTaskAnswer(taskID);
