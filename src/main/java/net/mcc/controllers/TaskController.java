@@ -24,18 +24,21 @@ public class TaskController {
 
     @RequestMapping(path = "/tasks", method = RequestMethod.POST)
     public StartTaskAnswer runTask(@RequestBody StartTaskRequest startTaskRequestData) throws IOException {
+        log.info("received start task request");
         return taskExecutorService.startTask(startTaskRequestData);
     }
 
 
     @RequestMapping(path = "/returnResult", method = RequestMethod.POST)
     public void postResult(@RequestBody IncomingTaskResult taskResult) throws IOException {
+        log.info("received returnResult for ID: " + taskResult.getId());
         taskResultsService.postResult(taskResult);
     }
 
 
     @RequestMapping(path = "/pingResult/{id}", method = RequestMethod.GET)
     public TaskAnswer pingResult(@PathVariable Long id) throws IOException {
+        log.info("received ping result");
         return taskResultsService.getResult(id);
     }
 
