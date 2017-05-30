@@ -26,7 +26,7 @@ public class TaskExecutorService {
 
     TaskExecutorService() {
         // TODO: wypelnic danymi z serwera
-        servers.put("VM1", "54.76.241.36");
+        servers.put("VM1", "http://54.76.241.36");
     }
 
     public StartTaskAnswer startTask(StartTaskRequest startTaskRequestData) throws IOException {
