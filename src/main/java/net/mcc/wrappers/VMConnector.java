@@ -22,7 +22,9 @@ public class VMConnector {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(startTaskRequestData);
 
-        body.append(jsonInString);
+//        body.append(jsonInString);
+        body.append("{\"taskID\": \"").append(taskID).append("\"");
+//        String path = "/startTask/" + taskID.toString();
 
         log.info("sending to: " + server);
         log.info("sending json: " + body.toString());
@@ -49,7 +51,6 @@ public class VMConnector {
         postBodyOutputStream.writeBytes(postBody);
         postBodyOutputStream.close();
 
-        log.info("content: " + postBodyOutputStream.toString());
         return httpURLConnection;
     }
 
