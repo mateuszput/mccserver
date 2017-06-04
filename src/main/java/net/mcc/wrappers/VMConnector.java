@@ -1,5 +1,9 @@
 package net.mcc.wrappers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import net.mcc.dto.StartTaskRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -11,10 +15,16 @@ import java.net.URL;
 
 @Component
 public class VMConnector {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public void startTask(String server, Long taskID) throws IOException {
+    public void startTask(String server, Long taskID, StartTaskRequest startTaskRequestData) throws IOException {
         StringBuffer body = new StringBuffer();
-        body.append("{\"taskID\": \"").append(taskID).append("\"");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(startTaskRequestData);
+
+        log.info("sending json: " + jsonInString);
+        body.append(jsonInString);
+
         String path = "/startTask/" + taskID.toString();
 
         HttpURLConnection httpURLConnection = createPOSTURL(server, taskID, body.toString(), path);

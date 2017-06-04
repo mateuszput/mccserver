@@ -31,10 +31,11 @@ public class TaskExecutorService {
 
     public StartTaskAnswer startTask(StartTaskRequest startTaskRequestData) throws IOException {
         Long taskID = currentTaskID.incrementAndGet();
-        String taskType = startTaskRequestData.getTaskType();
+//        String taskType = startTaskRequestData.getTaskType();
+
 
         // start new task on VM using vmConnector
-        vmConnector.startTask(servers.get(taskType), taskID);
+        vmConnector.startTask("http://54.76.241.36", taskID, startTaskRequestData);
 
         return new StartTaskAnswer(taskID);
     }
