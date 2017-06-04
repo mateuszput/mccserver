@@ -29,7 +29,6 @@ public class VMConnector {
         String path = "/startTask/" + taskID.toString();
 
         HttpURLConnection httpURLConnection = createPOSTURL(server, taskID, body.toString(), path);
-        log.info("content: " + httpURLConnection.getContent());
         int responseCode = httpURLConnection.getResponseCode();
 
         log.info("response code: " + responseCode);
@@ -50,6 +49,7 @@ public class VMConnector {
         postBodyOutputStream.writeBytes(postBody);
         postBodyOutputStream.close();
 
+        log.info("content: " + postBodyOutputStream.toString());
         return httpURLConnection;
     }
 
