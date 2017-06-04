@@ -25,7 +25,10 @@ public class TaskController {
     @RequestMapping(path = "/tasks", method = RequestMethod.POST)
     public StartTaskAnswer runTask(@RequestBody StartTaskRequest startTaskRequestData) throws IOException {
         log.info("received start task request");
-        return taskExecutorService.startTask(startTaskRequestData);
+
+        StartTaskAnswer startTaskAnswer = taskExecutorService.startTask(startTaskRequestData);
+        taskResultsService.addToMap(startTaskAnswer.getTaskID());
+        return startTaskAnswer;
     }
 
 
