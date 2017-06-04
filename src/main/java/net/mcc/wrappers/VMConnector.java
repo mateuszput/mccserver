@@ -31,6 +31,7 @@ public class VMConnector {
         HttpURLConnection httpURLConnection = createPOSTURL(server, taskID, body.toString(), path);
         int responseCode = httpURLConnection.getResponseCode();
 
+        log.info("response code: " + responseCode);
         // Note: Czytanie odpowiedzi - nie potrzebne raczej - tylko response code!
 //        StringBuffer response = readResponse(httpURLConnection);
     }
