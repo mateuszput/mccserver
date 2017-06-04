@@ -22,8 +22,8 @@ public class VMConnector {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(startTaskRequestData);
 
-//        body.append(jsonInString);
-        body.append("{\"taskID\": \"").append(taskID).append("\"}");
+        body.append(jsonInString);
+//        body.append("{\"taskID\": \"").append(taskID).append("\"}");
 //        String path = "/startTask/" + taskID.toString();
 
         log.info("sending to: " + server);
@@ -46,6 +46,7 @@ public class VMConnector {
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("POST");
         httpURLConnection.setDoOutput(true);
+        httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
         DataOutputStream postBodyOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
         postBodyOutputStream.writeBytes(postBody);
