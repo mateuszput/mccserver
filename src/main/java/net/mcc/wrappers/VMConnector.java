@@ -24,6 +24,7 @@ public class VMConnector {
 
         body.append(jsonInString);
 
+        log.info("sending to: " + server);
         log.info("sending json: " + body.toString());
         String path = "/startTask/" + taskID.toString();
 
