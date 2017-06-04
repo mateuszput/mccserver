@@ -23,7 +23,7 @@ public class VMConnector {
         String jsonInString = mapper.writeValueAsString(startTaskRequestData);
 
 //        body.append(jsonInString);
-        body.append("{\"taskID\": \"").append(taskID).append("\"");
+        body.append("{\"taskID\": \"").append(taskID).append("\"}");
 //        String path = "/startTask/" + taskID.toString();
 
         log.info("sending to: " + server);
