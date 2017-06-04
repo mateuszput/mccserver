@@ -11,12 +11,15 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class TaskExecutorService {
     @Autowired
     VMConnector vmConnector;
+    @Autowired
+    TaskResultsService taskResultsService;
 
     private AtomicLong currentTaskID = new AtomicLong(0);
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -31,12 +34,29 @@ public class TaskExecutorService {
 
     public StartTaskAnswer startTask(StartTaskRequest startTaskRequestData) throws IOException {
         Long taskID = currentTaskID.incrementAndGet();
-//        String taskType = startTaskRequestData.getTaskType();
 
-
-        // start new task on VM using vmConnector
-        vmConnector.startTask("http://54.76.241.36", taskID, startTaskRequestData);
+        String serverName = getRandomServer();
+        String serverAddress = servers.get(serverName);
+        taskResultsService.addToMap(taskID, serverName);
+        vmConnector.startTask(serverAddress, taskID, startTaskRequestData);
 
         return new StartTaskAnswer(taskID);
+    }
+
+
+    private String getRandomServer(){
+        int min = 0;
+        int max = 1;
+        int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+
+        switch(randomNum) {
+            default:
+            case 0:
+                return "VM1";
+            case 1:
+                // TODO: podmienic na drugi wpis w tablicy
+                return "VM1";
+        }
+
     }
 }

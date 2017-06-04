@@ -4,13 +4,15 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class TaskInfo {
+    private String serverName;
     private String answer;
     private Long startTaskTimestamp;
     private Long endTaskTimestamp;
     private Long firstPingTimestamp;
     private AtomicLong numberOfPings;
 
-    public TaskInfo(){
+    public TaskInfo(String serverName){
+        this.serverName = serverName;
         startTaskTimestamp = new Long(Instant.now().toEpochMilli());
         numberOfPings = new AtomicLong(0);
     }
@@ -18,6 +20,10 @@ public class TaskInfo {
     public void setAnswer(String answer) {
         endTaskTimestamp = new Long(Instant.now().toEpochMilli());
         this.answer = answer;
+    }
+
+    public String getServerName() {
+        return serverName;
     }
 
     public String getAnswer() {

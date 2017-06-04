@@ -26,9 +26,7 @@ public class TaskController {
     public StartTaskAnswer runTask(@RequestBody StartTaskRequest startTaskRequestData) throws IOException {
         log.info("received start task request");
 
-        StartTaskAnswer startTaskAnswer = taskExecutorService.startTask(startTaskRequestData);
-        taskResultsService.addToMap(startTaskAnswer.getTaskID());
-        return startTaskAnswer;
+        return taskExecutorService.startTask(startTaskRequestData);
     }
 
 

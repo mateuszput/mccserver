@@ -20,8 +20,8 @@ public class TaskResultsService {
         resultsReadyMap = new HashMap<>();
     }
 
-    public void addToMap(Long taskId){
-        resultsReadyMap.put(taskId, new TaskInfo());
+    public void addToMap(Long taskId, String serverName){
+        resultsReadyMap.put(taskId, new TaskInfo(serverName));
     }
 
 
