@@ -49,8 +49,9 @@ public class TaskResultsService {
             log.error("Concurrent access error");
         }
 
-        if (taskInfo.getAnswer() != null) {
-            taskAnswer.setAnswer(taskInfo.getAnswer());
+        String answer = taskInfo.getAnswer();
+        if (answer != null) {
+            taskAnswer.setAnswer(answer);
             saveTaskToFile(taskInfo);
         }
 
