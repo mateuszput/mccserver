@@ -37,7 +37,7 @@ public class TaskExecutorService {
 
         String serverName = getRandomServer();
         String serverAddress = servers.get(serverName);
-        taskResultsService.addToMap(taskID, serverName);
+        taskResultsService.addToMap(taskID, serverName, startTaskRequestData);
         vmConnector.startTask(serverAddress, taskID, startTaskRequestData);
 
         return new StartTaskAnswer(taskID);
