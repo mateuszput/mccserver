@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +24,7 @@ public class TaskResultsService {
 
     public TaskResultsService() throws IOException {
         resultsReadyMap = new HashMap<>();
-
-        boolean result = Files.deleteIfExists(Paths.get(FILE_NAME));
+        Files.deleteIfExists(Paths.get(FILE_NAME));
         Files.write(Paths.get(FILE_NAME), TaskInfo.getHeaders().getBytes());
     }
 
@@ -59,7 +59,7 @@ public class TaskResultsService {
 
     private void saveTaskToFile(TaskInfo taskInfo) throws IOException {
         log.info("zapisuje informacje o zadaniu: " + taskInfo.toString());
-        Files.write(Paths.get(FILE_NAME), taskInfo.toString().getBytes());
+        Files.write(Paths.get(FILE_NAME), taskInfo.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
 }

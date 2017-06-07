@@ -26,8 +26,8 @@ public class TaskInfo {
         }
 
         Long executionTime = new Long(endTaskTimestamp - startTaskTimestamp);
-        Long firstPingDelay = new Long(endTaskTimestamp - firstPingTimestamp);
-        return "" + taskId + "," + serverName + "," + taskType + "," + taskParamsString + "," + executionTime + "," + firstPingDelay + "," + numberOfPings.get();
+        Long firstPingDelay = new Long(firstPingTimestamp - endTaskTimestamp);
+        return System.lineSeparator() + taskId + "," + serverName + "," + taskType + "," + taskParamsString + "," + executionTime + "," + firstPingDelay + "," + numberOfPings.get();
     }
 
     public TaskInfo(String serverName, Long taskId, String taskType, String[] taskParams){
