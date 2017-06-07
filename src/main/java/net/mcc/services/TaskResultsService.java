@@ -58,6 +58,7 @@ public class TaskResultsService {
     }
 
     private void saveTaskToFile(TaskInfo taskInfo) throws IOException {
+        log.info("zapisuje informacje o zadaniu: " + taskInfo.toString());
         Files.write(Paths.get(FILE_NAME), taskInfo.toString().getBytes());
     }
 
