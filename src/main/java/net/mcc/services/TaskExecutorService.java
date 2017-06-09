@@ -29,10 +29,10 @@ public class TaskExecutorService {
 
     TaskExecutorService() {
         servers.put("worker1", "http://54.76.241.36");
-        servers.put("worker1a", "http://52.18.133.158");
-        servers.put("worker2", "http://52.51.215.238");
-        servers.put("worker4", "http://52.50.235.27");
-        servers.put("worker8", "http://54.76.241.36");
+        servers.put("worker1a", "http://52.16.226.154");
+        servers.put("worker2", "http://52.18.133.158");
+        servers.put("worker4", "http://52.51.215.238");
+        servers.put("worker8", "http://52.50.235.27");
     }
 
 
