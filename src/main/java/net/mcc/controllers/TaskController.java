@@ -22,6 +22,15 @@ public class TaskController {
     @Autowired
     TaskResultsService taskResultsService;
 
+    // TODO: dodac parametr w url
+    @RequestMapping(path = "/tasks/{vmType}", method = RequestMethod.POST)
+    public StartTaskAnswer runTaskWithVm(@RequestBody StartTaskRequest startTaskRequestData, @PathVariable String vmType) throws IOException {
+        log.info("received start task with VM");
+
+
+        return taskExecutorService.startTask(startTaskRequestData, vmType);
+    }
+
     @RequestMapping(path = "/tasks", method = RequestMethod.POST)
     public StartTaskAnswer runTask(@RequestBody StartTaskRequest startTaskRequestData) throws IOException {
         log.info("received start task request");

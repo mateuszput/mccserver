@@ -28,18 +28,33 @@ public class TaskExecutorService {
     private final Map<Long, String> idResultMap = new HashMap<>();
 
     TaskExecutorService() {
-        // TODO: wypelnic danymi z serwera
-        servers.put("VM1", "http://54.76.241.36");
+        servers.put("worker1", "http://54.76.241.36");
+        servers.put("worker1a", "http://52.18.133.158");
+        servers.put("worker2", "http://52.51.215.238");
+        servers.put("worker4", "http://52.50.235.27");
+        servers.put("worker8", "http://54.76.241.36");
     }
+
 
     public StartTaskAnswer startTask(StartTaskRequest startTaskRequestData) throws IOException {
         Long taskID = currentTaskID.incrementAndGet();
-
         String serverName = getRandomServer();
+
+        return executeTask(serverName, taskID, startTaskRequestData);
+    }
+
+
+    public StartTaskAnswer startTask(StartTaskRequest startTaskRequestData, String vmType) throws IOException {
+        Long taskID = currentTaskID.incrementAndGet();
+
+        return executeTask(vmType, taskID, startTaskRequestData);
+    }
+
+
+    private StartTaskAnswer executeTask(String serverName, Long taskID, StartTaskRequest startTaskRequestData) throws IOException {
         String serverAddress = servers.get(serverName);
         taskResultsService.addToMap(taskID, serverName, startTaskRequestData);
         vmConnector.startTask(serverAddress, taskID, startTaskRequestData);
-
         return new StartTaskAnswer(taskID);
     }
 
@@ -52,10 +67,10 @@ public class TaskExecutorService {
         switch(randomNum) {
             default:
             case 0:
-                return "VM1";
+                return "worker1";
             case 1:
                 // TODO: podmienic na drugi wpis w tablicy
-                return "VM1";
+                return "worker1";
         }
 
     }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Component
 public class TaskResultsService {
-    private final String FILE_NAME = "./results.cvs";
+    private final String FILE_NAME = "./results.csv";
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private Map<Long, TaskInfo> resultsReadyMap;
